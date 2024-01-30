@@ -1,4 +1,7 @@
 import { Layout, Select, Space, Button } from 'antd';
+import { icons } from 'antd/es/image/PreviewGroup';
+import { useCrypto } from '../../context/crypto-contex';
+import { useState, useEffect } from 'react';
 
 const headerStyle = {
   width: '100%',
@@ -11,54 +14,47 @@ const headerStyle = {
   alignItems: 'center',
 };
 
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
-const options = [
-  {
-    label: 'China',
-    value: 'china',
-    emoji: '🇨🇳',
-    desc: 'China (中国)',
-  },
-  {
-    label: 'USA',
-    value: 'usa',
-    emoji: '🇺🇸',
-    desc: 'USA (美国)',
-  },
-  {
-    label: 'Japan',
-    value: 'japan',
-    emoji: '🇯🇵',
-    desc: 'Japan (日本)',
-  },
-  {
-    label: 'Korea',
-    value: 'korea',
-    emoji: '🇰🇷',
-    desc: 'Korea (韩国)',
-  },
-]
-
 export default function AppHeader() {
+  const [select, setSelect] = useState(false);
+  const { crypto } = useCrypto();
+
+  useEffect (() => {
+    const keypress = (event) => {
+      if(event.key === '/') {
+        setSelect((prev) => !prev);
+      }
+    }
+    document.addEventListener('keypress', keypress)
+    return () => document.removeEventListener('keypress', keypress)
+  }, [])
+
+  function handleSelect(value) {
+    console.log(value)
+
+  }
   return (
   <Layout.Header style={headerStyle}>
     <Select
       style={{
-        width: '350',
+        width: '30%',
       }}
-      placeholder="select one country"
-      defaultValue={['china']}
-      onChange={handleChange}
-      optionLabelProp="label"
-      options={options}
+      open={select}
+      onSelect={handleSelect}
+      onClick={() => setSelect((prev) => !prev)}
+      value="press / to open"
+      options={crypto.map((coin) =>({
+        label: coin.name,
+        value: coin.id,
+        icon: coin.icon,
+      }))}
       optionRender={(option) => (
         <Space>
-          <span role="img" aria-label={option.data.label}>
-            {option.data.emoji}
-          </span>
-          {option.data.desc}
+          <img 
+            style={{width: 20}} 
+            src={option.data.icon} 
+            alt={option.data.label} 
+          />  {' '}
+          {option.data.label}
         </Space>
       )}
   />
