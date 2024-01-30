@@ -10,7 +10,7 @@ import {
   DatePicker,
   Result,
 } from "antd";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useCrypto } from "../context/crypto-contex";
 import CoinInfo from "./CoinInfo";
 
@@ -26,16 +26,17 @@ const validateMessages = {
 
 export default function AddAssetForm({ onClose }) {
   const [form] = Form.useForm();
-  const { crypto } = useCrypto();
+  const { crypto, addAsset } = useCrypto();
   const [coin, setCoin] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const assetRef = useRef();
 
   if (submitted) {
     return (
       <Result
         status="success"
         title="New asset added!"
-        subTitle={`Added ${42} of ${coin.name} by price ${24}`}
+        subTitle={`Added ${assetRef.current.amount} of ${coin.name} by price ${assetRef.current.price}`}
         extra={[
           <Button type="primary" key="console" onClick={onClose}>
             Close
@@ -80,7 +81,9 @@ export default function AddAssetForm({ onClose }) {
       price: values.price,
       date: values.date?.$d ?? new Date(),
     };
+    assetRef.current = newAsset;
     setSubmitted(true);
+    addAsset(newAsset);
   }
 
   function handleAmountChange(value) {
