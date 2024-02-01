@@ -1,12 +1,8 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { useCrypto } from "../context/crypto-contex";
+import { useCrypto } from "../context/crypto-context";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-export function App() {
-  return <Pie data={data} />;
-}
 
 export default function PortfolioChart() {
   const { assets } = useCrypto();
@@ -33,7 +29,7 @@ export default function PortfolioChart() {
     <div
       style={{
         display: "flex",
-        marginBotttom: "1rem",
+        marginBottom: "1rem",
         justifyContent: "center",
         height: 400,
       }}

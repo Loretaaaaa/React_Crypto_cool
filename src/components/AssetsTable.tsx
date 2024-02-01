@@ -1,7 +1,16 @@
 import { Table } from "antd";
-import { useCrypto } from "../context/crypto-contex";
+import { useCrypto } from "../context/crypto-context";
 
-const columns = [
+type CustomColumn = {
+  title: string;
+  dataIndex: string;
+  onFilter?: (value: any, record: any) => boolean;
+  sorter?: (a: any, b: any) => number;
+  sortDirections?: ('ascend' | 'descend')[];
+  defaultSortOrder?: 'ascend' | 'descend';
+};
+
+const columns: CustomColumn[] = [
   {
     title: "Name",
     dataIndex: "name",

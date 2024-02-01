@@ -1,10 +1,9 @@
 import { Layout, Typography } from "antd";
-import { useCrypto } from "../../context/crypto-contex";
+import { useCrypto } from "../../context/crypto-context";
 import PortfolioChart from "../PortfolioChart";
 import AssetsTable from "../AssetsTable";
 
 const contentStyle = {
-  textAlign: "center",
   minHeight: "calc(100vh - 60px)",
   color: "#fff",
   backgroundColor: "#001529",

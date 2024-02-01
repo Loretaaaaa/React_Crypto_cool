@@ -1,12 +1,11 @@
 import { Layout, Select, Space, Button, Modal, Drawer } from "antd";
-import { useCrypto } from "../../context/crypto-contex";
+import { useCrypto } from "../../context/crypto-context";
 import { useState, useEffect } from "react";
 import CoinInfoModal from "../CoinInfoModal";
 import AddAssetForm from "../AddAssetForm";
 
 const headerStyle = {
   width: "100%",
-  textAlign: "center",
   height: 60,
   padding: "1rem",
   display: "flex",
@@ -23,7 +22,7 @@ export default function AppHeader() {
   const { crypto } = useCrypto();
 
   useEffect(() => {
-    const keypress = (event) => {
+    const keypress = (event: { key: string; }) => {
       if (event.key === "/") {
         setSelect((prev) => !prev);
       }
@@ -32,7 +31,7 @@ export default function AppHeader() {
     return () => document.removeEventListener("keypress", keypress);
   }, []);
 
-  function handleSelect(value) {
+  function handleSelect(value: any) {
     console.log(value);
     setCoin(crypto.find((c) => c.id === value));
     setModal(true);

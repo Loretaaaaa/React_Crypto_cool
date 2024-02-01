@@ -1,10 +1,10 @@
 import AppLayout from './components/layout/AppLayout';
-import { CryptoContextProvider } from './context/crypto-contex';
+import { CryptoContextProvider } from './context/crypto-context';
 
 
 export default function App() {
-  
-  return  (
+
+  return (
     <CryptoContextProvider>
       <AppLayout />
     </CryptoContextProvider>
